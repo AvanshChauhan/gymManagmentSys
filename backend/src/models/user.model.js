@@ -58,7 +58,21 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
 
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      default: null,
+    },
     profileImage: {
       type: String,
       default: "",
@@ -66,7 +80,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 userSchema.index(
@@ -74,14 +88,13 @@ userSchema.index(
   {
     unique: true,
     partialFilterExpression: { email: { $type: "string" } },
-  }
+  },
 );
 
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return
+  if (!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 10);
-
 });
 
 userSchema.methods.comparePassword = async function (password) {
