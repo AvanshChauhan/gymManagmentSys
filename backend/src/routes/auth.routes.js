@@ -1,0 +1,13 @@
+import express from "express";
+import login from "../controllers/auth/login.controller.js";
+import authMiddleWare from "../middlewares/auth.middleware.js";
+import getMe from "../controllers/auth/getMe.controller.js";
+import logout from "../controllers/auth/logout.controller.js";
+import adminMiddleware from "../middlewares/admin.middleware.js";
+import createMember from "../controllers/member/createMember.controller.js";
+const router = express.Router();
+router.post("/login", login);
+router.post("/members", authMiddleWare, adminMiddleware, createMember);
+router.get("/getMe",authMiddleWare, getMe);
+router.post("/logout", authMiddleWare,logout);
+export default router;
