@@ -10,7 +10,7 @@ const planSchema = new mongoose.Schema(
     durationInDays: {
       type: Number,
       required: [true, "duration is required"],
-      min: [1, "duration must be one day"],
+      min: [1, "duration must be at least 1 day"],
     },
     isActive: {
       type: Boolean,
@@ -25,6 +25,25 @@ const planSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: "",
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      default: null,
     },
   },
   { timestamps: true },
