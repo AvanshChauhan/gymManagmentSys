@@ -46,7 +46,7 @@ const planSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 const plan = mongoose.model("plan", planSchema);
 export default plan;

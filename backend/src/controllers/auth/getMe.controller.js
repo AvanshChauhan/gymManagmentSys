@@ -4,9 +4,7 @@ const getMe = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const findUser = await user
-      .findById(userId)
-      .select("-password");
+    const findUser = await user.findById(userId).select("-password");
 
     if (!findUser) {
       return res.status(404).json({

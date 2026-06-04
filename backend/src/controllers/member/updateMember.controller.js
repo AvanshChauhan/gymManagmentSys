@@ -14,22 +14,24 @@ const updateAnUser = async (req, res) => {
       address,
     } = req.body;
 
-    const updatedUser = await user.findByIdAndUpdate(
-      memberId,
-      {
-        name,
-        phone,
-        gender,
-        dateOfBirth,
-        weight,
-        height,
-        profileImage,
-        address,
-      },
-      {
-        new: true,
-      }
-    ).select("-password");
+    const updatedUser = await user
+      .findByIdAndUpdate(
+        memberId,
+        {
+          name,
+          phone,
+          gender,
+          dateOfBirth,
+          weight,
+          height,
+          profileImage,
+          address,
+        },
+        {
+          new: true,
+        }
+      )
+      .select("-password");
 
     if (!updatedUser) {
       return res.status(404).json({

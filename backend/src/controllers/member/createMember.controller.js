@@ -52,4 +52,4 @@ const createMember = async (req, res) => {
     });
   }
 };
-export default createMember
+export default createMember;

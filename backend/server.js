@@ -5,9 +5,9 @@ import seedAdmin from "./src/seed/admin.seed.js";
 const PORT = process.env.PORT || 3000;
 
 connectDb()
-  .then(async() => {
+  .then(async () => {
     console.log("Database Connected");
-    await seedAdmin()
+    await seedAdmin();
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
@@ -15,4 +15,3 @@ connectDb()
   .catch((err) => {
     console.log("Database Connection Failed:", err.message);
   });
-  

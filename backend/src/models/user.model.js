@@ -80,7 +80,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 userSchema.index(
@@ -88,7 +88,7 @@ userSchema.index(
   {
     unique: true,
     partialFilterExpression: { email: { $type: "string" } },
-  },
+  }
 );
 
 userSchema.pre("save", async function () {

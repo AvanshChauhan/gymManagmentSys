@@ -1,19 +1,20 @@
 import mongoose from "mongoose";
-const paymentSchema=new mongoose.Schema({
-     membershipId: {
+const paymentSchema = new mongoose.Schema(
+  {
+    membershipId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "membership",
       required: [true, "membership id is required"],
     },
-    amount:{
-        type:Number,
-        min:[0,"amount can not be in negative"],
-        required:[true,"amount is required"]
+    amount: {
+      type: Number,
+      min: [0, "amount can not be in negative"],
+      required: [true, "amount is required"],
     },
-    paymentMethod:{
-        type:String,
-        enum:["cash","upi"],
-        default:"cash"
+    paymentMethod: {
+      type: String,
+      enum: ["cash", "upi"],
+      default: "cash",
     },
     note: {
       type: String,
@@ -25,6 +26,8 @@ const paymentSchema=new mongoose.Schema({
       type: Date,
       default: Date.now,
     },
-},{timestamps:true})
-const payment=mongoose.model("payment",paymentSchema)
-export default payment
+  },
+  { timestamps: true }
+);
+const payment = mongoose.model("payment", paymentSchema);
+export default payment;

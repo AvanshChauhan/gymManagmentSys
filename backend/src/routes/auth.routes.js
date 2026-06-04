@@ -8,6 +8,6 @@ import createMember from "../controllers/member/createMember.controller.js";
 const router = express.Router();
 router.post("/login", login);
 router.post("/members", authMiddleWare, adminMiddleware, createMember);
-router.get("/getMe",authMiddleWare, getMe);
-router.post("/logout", authMiddleWare,logout);
+router.get("/getMe", authMiddleWare, getMe);
+router.post("/logout", authMiddleWare, logout);
 export default router;

@@ -7,13 +7,13 @@ const authMiddleWare = async (req, res, next) => {
         message: "unauthorized access",
       });
     }
-    const verifyToken=jwt.verify(token,process.env.JWT_SECRET)
-    req.user=verifyToken
-    next()
+    const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verifyToken;
+    next();
   } catch (error) {
     return res.status(400).json({
-        error:"unathorized access"
-    })
+      error: "unathorized access",
+    });
   }
 };
-export default authMiddleWare
+export default authMiddleWare;
