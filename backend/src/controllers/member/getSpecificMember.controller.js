@@ -4,8 +4,12 @@ const getSpecificMember = async (req, res) => {
   try {
     const memberId = req.params.id;
 
-    const member = await user.findById(memberId).select("-password");
-
+    const member = await user
+      .findOne({
+        _id: memberId,
+        isDeleted: false,
+      })
+      .select("-password");
     if (!member) {
       return res.status(404).json({
         success: false,
