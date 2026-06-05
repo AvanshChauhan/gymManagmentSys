@@ -1,41 +1,62 @@
 import mongoose from "mongoose";
+
 const membershipSchema = new mongoose.Schema(
   {
-    userId: {
+    memberId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: [true, "userID is required"],
       ref: "user",
+      required: [true, "Member id is required"],
     },
+
     planId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: [true, "user id is required"],
       ref: "plan",
+      required: [true, "Plan id is required"],
     },
+
     startDate: {
       type: Date,
-      required: [true, "start date is rquired"],
+      required: [true, "Start date is required"],
     },
+
     endDate: {
       type: Date,
-      required: [true, "end date is required"],
+      required: [true, "End date is required"],
     },
-    totalAmount: {
-      type: Number,
-      required: [true, "ammount is required"],
-      min: [0, "ammount can not be in negative"],
-    },
-    paidAmount: {
-      type: Number,
-      default: 0,
-      min: [0, "amount cannot be negative"],
-    },
+
     status: {
       type: String,
-      enum: ["active", "pending", "expired"],
-      default: "pending",
+      enum: ["active", "pending", "expired", "cancelled"],
+      default: "active",
+    },
+
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      default: null,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
-const membership = mongoose.model("membership", membershipSchema);
-export default membership;
+
+const Membership = mongoose.model("membership", membershipSchema);
+
+export default Membership;
