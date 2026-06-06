@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://fitsuite-yz8d.onrender.com",
         changeOrigin: true,
       },
     },
