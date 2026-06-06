@@ -6,11 +6,13 @@ import getAllMembers from "../controllers/member/getMembers.controller.js";
 import getSpecificMember from "../controllers/member/getSpecificMember.controller.js";
 import updateAnUser from "../controllers/member/updateMember.controller.js";
 import deleteAnUser from "../controllers/member/deleteMember.controller.js";
+import searchMembers from "../controllers/member/searchMember.controller.js";
 const router = express.Router();
 
 router.post("/", authMiddleWare, adminMiddleware, createMember);
 
 router.get("/", authMiddleWare, adminMiddleware, getAllMembers);
+router.get("/search", authMiddleWare, adminMiddleware, searchMembers);
 router.get("/getAllmembers", authMiddleWare, adminMiddleware, getAllMembers);
 router.post("/getAllmembers", authMiddleWare, adminMiddleware, getAllMembers);
 router.get("/:id", authMiddleWare, adminMiddleware, getSpecificMember);

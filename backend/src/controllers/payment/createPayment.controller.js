@@ -7,11 +7,12 @@ const createPayment = async (req, res) => {
     const membershipId = req.params.id;
 
     const { amount, paymentMethod, note } = req.body;
+    const numericAmount = Number(amount);
 
-    if (!amount) {
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
       return res.status(400).json({
         success: false,
-        message: "Amount is required",
+        message: "Valid amount is required",
       });
     }
 
@@ -49,7 +50,7 @@ const createPayment = async (req, res) => {
       0
     );
 
-    if (totalPaid + amount > selectedPlan.price) {
+    if (totalPaid + numericAmount > selectedPlan.price) {
       return res.status(400).json({
         success: false,
         message: "Payment exceeds plan amount",
@@ -58,7 +59,7 @@ const createPayment = async (req, res) => {
 
     const newPayment = await Payment.create({
       membershipId,
-      amount,
+      amount: numericAmount,
       paymentMethod,
       note,
       receivedBy: req.user.userId,

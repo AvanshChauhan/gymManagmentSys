@@ -1,12 +1,27 @@
 import user from "../../models/user.model.js";
 import { buildPaginationMeta, getPagination } from "../../utils/pagination.js";
 
-const getAllMembers = async (req, res) => {
+const searchMembers = async (req, res) => {
   try {
     const { page, limit, skip } = getPagination(req.query);
-    const filter = { role: "member", isDeleted: false };
+    const search = (req.query.q || req.query.search || "").trim();
 
-    const [allMembers, total] = await Promise.all([
+    const filter = {
+      role: "member",
+      isDeleted: false,
+    };
+
+    if (search) {
+      const searchRegex = new RegExp(search, "i");
+      filter.$or = [
+        { name: searchRegex },
+        { phone: searchRegex },
+        { email: searchRegex },
+        { address: searchRegex },
+      ];
+    }
+
+    const [members, total] = await Promise.all([
       user
         .find(filter)
         .select("-password")
@@ -16,17 +31,11 @@ const getAllMembers = async (req, res) => {
       user.countDocuments(filter),
     ]);
 
-    if (allMembers.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "database is empty hence no user exist",
-      });
-    }
     return res.status(200).json({
       success: true,
-      count: allMembers.length,
+      count: members.length,
       pagination: buildPaginationMeta(page, limit, total),
-      data: allMembers,
+      data: members,
     });
   } catch (error) {
     return res.status(500).json({
@@ -36,4 +45,5 @@ const getAllMembers = async (req, res) => {
     });
   }
 };
-export default getAllMembers;
+
+export default searchMembers;

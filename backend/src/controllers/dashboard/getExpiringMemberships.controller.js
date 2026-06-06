@@ -1,16 +1,32 @@
 import Membership from "../../models/membership.model.js";
 import { buildPaginationMeta, getPagination } from "../../utils/pagination.js";
 
-const getAllMemberships = async (req, res) => {
+const getExpiringMemberships = async (req, res) => {
   try {
     const { page, limit, skip } = getPagination(req.query);
-    const filter = { isDeleted: false };
+    const days = Math.max(parseInt(req.query.days, 10) || 7, 1);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const expiryDate = new Date(today);
+    expiryDate.setDate(expiryDate.getDate() + days);
+    expiryDate.setHours(23, 59, 59, 999);
+
+    const filter = {
+      isDeleted: false,
+      status: "active",
+      endDate: {
+        $gte: today,
+        $lte: expiryDate,
+      },
+    };
 
     const [memberships, total] = await Promise.all([
       Membership.find(filter)
         .populate("memberId", "-password")
         .populate("planId")
-        .sort({ createdAt: -1 })
+        .sort({ endDate: 1 })
         .skip(skip)
         .limit(limit),
       Membership.countDocuments(filter),
@@ -19,6 +35,7 @@ const getAllMemberships = async (req, res) => {
     return res.status(200).json({
       success: true,
       count: memberships.length,
+      days,
       pagination: buildPaginationMeta(page, limit, total),
       data: memberships,
     });
@@ -31,4 +48,4 @@ const getAllMemberships = async (req, res) => {
   }
 };
 
-export default getAllMemberships;
+export default getExpiringMemberships;

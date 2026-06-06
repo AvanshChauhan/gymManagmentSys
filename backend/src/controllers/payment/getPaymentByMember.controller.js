@@ -1,10 +1,23 @@
 import Payment from "../../models/payment.model.schema.js";
+import Membership from "../../models/membership.model.js";
 import { buildPaginationMeta, getPagination } from "../../utils/pagination.js";
 
-const getPayment = async (req, res) => {
+const getPaymentsByMember = async (req, res) => {
   try {
+    const memberId = req.params.memberId;
     const { page, limit, skip } = getPagination(req.query);
-    const filter = { isDeleted: false };
+
+    const memberships = await Membership.find({
+      memberId,
+      isDeleted: false,
+    });
+
+    const membershipIds = memberships.map((membership) => membership._id);
+
+    const filter = {
+      membershipId: { $in: membershipIds },
+      isDeleted: false,
+    };
 
     const [payments, total] = await Promise.all([
       Payment.find(filter)
@@ -21,13 +34,6 @@ const getPayment = async (req, res) => {
       Payment.countDocuments(filter),
     ]);
 
-    if (payments.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No payments exist",
-      });
-    }
-
     return res.status(200).json({
       success: true,
       count: payments.length,
@@ -37,10 +43,10 @@ const getPayment = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: "Some error occurred",
       error: error.message,
     });
   }
 };
 
-export default getPayment;
+export default getPaymentsByMember;
