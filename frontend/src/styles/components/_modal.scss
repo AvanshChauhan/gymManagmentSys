@@ -1,0 +1,38 @@
+@use "../abstracts/variables" as *;
+
+.modal-backdrop {
+  align-items: center;
+  backdrop-filter: blur(18px);
+  background: rgba(2, 6, 23, 0.72);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 18px;
+  position: fixed;
+  z-index: 50;
+}
+
+.modal {
+  background:
+    linear-gradient(145deg, rgba(30, 41, 59, 0.96), rgba(15, 23, 42, 0.96)),
+    $bg-2;
+  border: 1px solid $border;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  max-height: calc(100vh - 36px);
+  max-width: 560px;
+  overflow: auto;
+  padding: 20px;
+  width: 100%;
+}
+
+.modal__header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.modal__header h2 {
+  margin: 0;
+}

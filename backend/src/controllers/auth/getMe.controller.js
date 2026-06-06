@@ -6,7 +6,7 @@ const getMe = async (req, res) => {
 
     const findUser = await user.findById(userId).select("-password");
 
-    if (!findUser) {
+    if (!findUser || findUser.isDeleted) {
       return res.status(404).json({
         success: false,
         message: "User not found",

@@ -1,0 +1,15 @@
+@use "../abstracts/variables" as *;
+
+.with-actions {
+  gap: 18px;
+}
+
+.settings-card svg {
+  color: $accent;
+}
+
+@media (max-width: 640px) {
+  .with-actions .primary-button {
+    width: 100%;
+  }
+}

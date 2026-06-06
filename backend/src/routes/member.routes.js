@@ -7,9 +7,22 @@ import getSpecificMember from "../controllers/member/getSpecificMember.controlle
 import updateAnUser from "../controllers/member/updateMember.controller.js";
 import deleteAnUser from "../controllers/member/deleteMember.controller.js";
 import searchMembers from "../controllers/member/searchMember.controller.js";
+import {
+  getMyMembership,
+  getMyPayments,
+  getMyProfile,
+  getMySummary,
+  updateMyProfile,
+} from "../controllers/member/memberSelf.controller.js";
 const router = express.Router();
 
 router.post("/", authMiddleWare, adminMiddleware, createMember);
+
+router.get("/me/profile", authMiddleWare, getMyProfile);
+router.patch("/me/profile", authMiddleWare, updateMyProfile);
+router.get("/me/summary", authMiddleWare, getMySummary);
+router.get("/me/membership", authMiddleWare, getMyMembership);
+router.get("/me/payments", authMiddleWare, getMyPayments);
 
 router.get("/", authMiddleWare, adminMiddleware, getAllMembers);
 router.get("/search", authMiddleWare, adminMiddleware, searchMembers);

@@ -1,0 +1,63 @@
+@use "../abstracts/variables" as *;
+
+.table-card {
+  overflow: hidden;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: 760px;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid $border;
+  padding: 16px 18px;
+  text-align: left;
+}
+
+th {
+  color: $muted;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+td {
+  color: $text;
+}
+
+tbody tr:hover {
+  background: rgba(34, 197, 94, 0.045);
+}
+
+.row-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.table-empty {
+  color: $muted;
+  display: grid;
+  min-height: 120px;
+  place-items: center;
+}
+
+.pagination {
+  align-items: center;
+  color: $muted;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination > div {
+  display: flex;
+  gap: 8px;
+}

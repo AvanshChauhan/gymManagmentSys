@@ -1,0 +1,88 @@
+@use "../abstracts/variables" as *;
+
+.toolbar {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.search-bar,
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid $border;
+  border-radius: $radius;
+  color: $text;
+}
+
+.search-bar {
+  align-items: center;
+  color: $muted;
+  display: flex;
+  gap: 10px;
+  max-width: 460px;
+  padding: 0 14px;
+  width: 100%;
+}
+
+.search-bar input {
+  background: transparent;
+  border: 0;
+  color: $text;
+  height: 46px;
+  outline: 0;
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  min-height: 46px;
+  outline: 0;
+  padding: 0 14px;
+  width: 100%;
+}
+
+.form-grid textarea {
+  min-height: 96px;
+  padding-top: 12px;
+  resize: vertical;
+}
+
+.form-error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: $radius;
+  color: #fecaca;
+  padding: 12px;
+}
+
+.form-section-title {
+  color: $accent;
+  font-size: 0.78rem;
+  font-weight: 900;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.form-hint {
+  color: $muted;
+  font-size: 0.86rem;
+}
+
+.detail-list {
+  display: grid;
+  gap: 8px 16px;
+  grid-template-columns: minmax(90px, 0.35fr) 1fr;
+}
+
+.detail-list span {
+  color: $muted;
+}

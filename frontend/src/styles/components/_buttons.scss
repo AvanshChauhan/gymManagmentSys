@@ -1,0 +1,68 @@
+@use "../abstracts/variables" as *;
+
+.icon-button,
+.ghost-button,
+.primary-button {
+  align-items: center;
+  border-radius: $radius;
+  display: inline-flex;
+  gap: 9px;
+  justify-content: center;
+  min-height: 40px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.icon-button {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid $border;
+  color: $text;
+  height: 40px;
+  padding: 0;
+  position: relative;
+  width: 40px;
+}
+
+.icon-button:hover,
+.ghost-button:hover,
+.primary-button:hover {
+  transform: translateY(-1px);
+}
+
+.icon-button.has-dot::after {
+  background: $accent;
+  border: 2px solid $bg;
+  border-radius: 999px;
+  content: "";
+  height: 9px;
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  width: 9px;
+}
+
+.ghost-button {
+  background: rgba(15, 23, 42, 0.58);
+  border: 1px solid $border;
+  color: $text;
+  padding: 0 15px;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, $accent, #16a34a);
+  border: 0;
+  color: #052e16;
+  font-weight: 900;
+  padding: 0 18px;
+}
+
+.primary-button.full,
+.ghost-button.full {
+  width: 100%;
+}
+
+.danger {
+  color: $danger;
+}

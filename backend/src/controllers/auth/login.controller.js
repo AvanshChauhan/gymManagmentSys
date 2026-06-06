@@ -7,11 +7,15 @@ const login = async (req, res) => {
 
     if (!email || !password) {
       return res.status(400).json({
-        message: "Email and password are required",
+        message: "Email or phone and password are required",
       });
     }
 
-    const existingUser = await user.findOne({ email });
+    const loginId = email.trim();
+    const existingUser = await user.findOne({
+      $or: [{ email: loginId.toLowerCase() }, { phone: loginId }],
+      isDeleted: false,
+    });
 
     if (!existingUser) {
       return res.status(401).json({

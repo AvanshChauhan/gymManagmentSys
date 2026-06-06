@@ -1,0 +1,172 @@
+@use "../abstracts/variables" as *;
+
+.member-page {
+  gap: 22px;
+}
+
+.member-welcome {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 210px;
+  padding: 28px;
+}
+
+.member-welcome h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 8px 0;
+}
+
+.member-welcome p {
+  color: $muted;
+  margin: 0;
+}
+
+.member-welcome__photo {
+  align-items: center;
+  background: linear-gradient(135deg, $accent, #16a34a);
+  border-radius: $radius;
+  color: #052e16;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 3rem;
+  font-weight: 900;
+  height: 118px;
+  justify-content: center;
+  overflow: hidden;
+  width: 118px;
+}
+
+.member-welcome__photo img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.member-stats {
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+
+.member-profile-card {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 280px minmax(0, 1fr);
+  padding: 24px;
+}
+
+.image-upload {
+  display: grid;
+  gap: 14px;
+}
+
+.image-upload__preview {
+  align-items: center;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid $border;
+  border-radius: $radius;
+  color: $muted;
+  display: flex;
+  height: 280px;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.image-upload__preview img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.image-upload__controls {
+  display: flex;
+  gap: 10px;
+}
+
+.image-upload input {
+  display: none;
+}
+
+.image-upload__progress {
+  background: rgba(15, 23, 42, 0.78);
+  border-radius: 999px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.image-upload__progress span {
+  background: $accent;
+  display: block;
+  height: 100%;
+}
+
+.member-form-grid {
+  align-content: start;
+}
+
+.member-detail-list {
+  align-content: start;
+  margin: 0;
+}
+
+.member-info-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+
+.member-info-card {
+  display: grid;
+  gap: 12px;
+  min-height: 180px;
+  padding: 22px;
+}
+
+.member-info-card svg {
+  color: $accent;
+}
+
+.member-info-card span {
+  color: $muted;
+  font-weight: 800;
+}
+
+.member-info-card strong:not(.status-badge) {
+  font-size: 1.6rem;
+}
+
+.member-info-card p {
+  color: $muted;
+  margin: 0;
+}
+
+@media (max-width: 1280px) {
+  .member-stats,
+  .member-info-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 780px) {
+  .member-profile-card {
+    grid-template-columns: 1fr;
+  }
+
+  .member-welcome {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .member-stats,
+  .member-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-upload__preview {
+    height: 220px;
+  }
+}
