@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://fitsuite-yz8d.onrender.com/api/:path*"
-    }
-  ]
-}
