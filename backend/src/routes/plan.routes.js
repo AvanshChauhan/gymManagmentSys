@@ -8,8 +8,9 @@ import updatePlan from "../controllers/plans/updatePlan.controller.js";
 import deletePlan from "../controllers/plans/deletePlan.controller.js";
 const router = express.Router();
 router.post("/", authMiddleWare, adminMiddleware, createPlan);
+router.get("/", authMiddleWare, adminMiddleware, getAllplan);
 router.get("/plans", authMiddleWare, adminMiddleware, getAllplan);
 router.get("/:id", authMiddleWare, adminMiddleware, specificPlan);
 router.put("/:id", authMiddleWare, adminMiddleware, updatePlan);
-router.delete("/:id",authMiddleWare,adminMiddleware,deletePlan)
+router.delete("/:id", authMiddleWare, adminMiddleware, deletePlan);
 export default router;

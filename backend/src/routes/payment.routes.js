@@ -5,6 +5,7 @@ import createPayment from "../controllers/payment/createPayment.controller.js";
 import getPayment from "../controllers/payment/getPayments.controller.js";
 import getSpecificPayment from "../controllers/payment/getSpecificPlan.controller.js";
 import getPaymentsByMember from "../controllers/payment/getPaymentByMember.controller.js";
+import deletePayment from "../controllers/payment/deletePayment.controller.js";
 const router = express.Router();
 router.post("/:id", authMiddleWare, adminMiddleware, createPayment);
 router.get("/", authMiddleWare, adminMiddleware, getPayment);
@@ -15,4 +16,5 @@ router.get(
   getPaymentsByMember
 );
 router.get("/:id", authMiddleWare, adminMiddleware, getSpecificPayment);
+router.delete("/:id", authMiddleWare, adminMiddleware, deletePayment);
 export default router;

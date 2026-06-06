@@ -6,8 +6,12 @@ import adminMiddleware from "../middlewares/admin.middleware.js";
 import getAllMembership from "../controllers/membership/getMembership.controller.js";
 import getSpecificMembership from "../controllers/membership/getSpecificMembership.controller.js";
 import renewMembership from "../controllers/membership/renewMembership.controller.js";
+import cancelMembership from "../controllers/membership/cancelMembership.controller.js";
+import deleteMembership from "../controllers/membership/deleteMembership.controller.js";
 router.post("/", authMiddleWare, adminMiddleware, assignMembership);
-router.get("/",authMiddleWare,authMiddleWare,getAllMembership)
-router.get("/:id",authMiddleWare,adminMiddleware,getSpecificMembership)
-router.patch("/:id/renew",authMiddleWare,adminMiddleware,renewMembership)
+router.get("/", authMiddleWare, adminMiddleware, getAllMembership);
+router.get("/:id", authMiddleWare, adminMiddleware, getSpecificMembership);
+router.patch("/:id/renew", authMiddleWare, adminMiddleware, renewMembership);
+router.patch("/:id/cancel", authMiddleWare, adminMiddleware, cancelMembership);
+router.delete("/:id", authMiddleWare, adminMiddleware, deleteMembership);
 export default router;
