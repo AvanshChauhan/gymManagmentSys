@@ -2,6 +2,9 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+// Debug
+import user from "./models/user.model.js";
+
 import authRoutes from "./routes/auth.routes.js";
 import memberRoutes from "./routes/member.routes.js";
 import planRoutes from "./routes/plan.routes.js";
@@ -33,6 +36,12 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("/api/debug/users", async (req, res) => {
+  const count = await user.countDocuments({});
+  const admin = await user.findOne({ role: "admin" }).select("email name phone");
+  res.json({ count, admin });
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/members", memberRoutes);
