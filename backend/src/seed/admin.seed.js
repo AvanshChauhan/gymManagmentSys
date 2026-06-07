@@ -8,20 +8,19 @@ const ADMIN_PHONE = process.env.ADMIN_PHONE || "0000000000";
 
 const seedAdmin = async () => {
   try {
-    let admin = await user.findOne({ role: "admin", isDeleted: false });
+    const existing = await user.findOne({ email: ADMIN_EMAIL });
 
-    if (admin) {
-      admin.email = ADMIN_EMAIL;
-      admin.name = ADMIN_NAME;
-      admin.phone = ADMIN_PHONE;
-      const isMatch = await bcrypt.compare(ADMIN_PASSWORD, admin.password);
-      if (!isMatch) {
-        admin.password = ADMIN_PASSWORD;
-      }
-      await admin.save();
+    if (existing) {
+      existing.name = ADMIN_NAME;
+      existing.phone = ADMIN_PHONE;
+      const match = await bcrypt.compare(ADMIN_PASSWORD, existing.password);
+      if (!match) existing.password = ADMIN_PASSWORD;
+      await existing.save();
       console.log("Admin synced");
       return;
     }
+
+    await user.deleteMany({ role: "admin" });
 
     await user.create({
       name: ADMIN_NAME,
