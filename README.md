@@ -10,7 +10,7 @@ Live Application: https://fitsuitenow.vercel.app/
 
 Use the following demo account to explore the application:
 
-**Phone Number:** `7418529630`
+**Phone Number:** `7418529639`
 
 **Password:** `7418529630`
 
