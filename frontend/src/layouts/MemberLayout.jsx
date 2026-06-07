@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/layout/Navbar.jsx";
 import MemberSidebar from "../components/layout/MemberSidebar.jsx";
 
+const MOBILE_BREAKPOINT = 1100;
+
 const MemberLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_BREAKPOINT);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const toggleSidebar = useCallback(() => setCollapsed((v) => !v), []);
+  const closeSidebar = useCallback(() => setCollapsed(false), []);
 
   return (
     <div className="app-shell member-shell">
-      <MemberSidebar
-        collapsed={collapsed}
-      />
+      <MemberSidebar collapsed={collapsed} onClose={closeSidebar} />
+      {isMobile && collapsed && (
+        <div className="sidebar-overlay" onClick={closeSidebar} />
+      )}
       <div className="app-shell__main">
-        <Navbar onSidebarToggle={() => setCollapsed((value) => !value)} />
+        <Navbar onSidebarToggle={toggleSidebar} />
         <main className="page-frame">
           <Outlet />
         </main>

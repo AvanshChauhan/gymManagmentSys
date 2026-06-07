@@ -17,7 +17,7 @@ const navItems = [
   { label: "Payments", path: "/member/payments", icon: CreditCard },
 ];
 
-const MemberSidebar = ({ collapsed }) => {
+const MemberSidebar = ({ collapsed, onClose }) => {
   const { logout, user } = useAuth();
 
   return (
@@ -50,7 +50,7 @@ const MemberSidebar = ({ collapsed }) => {
           const Icon = item.icon;
 
           return (
-            <NavLink key={item.path} to={item.path} className="sidebar__link">
+            <NavLink key={item.path} to={item.path} className="sidebar__link" onClick={onClose}>
               <Icon size={19} />
               <span>{item.label}</span>
             </NavLink>
