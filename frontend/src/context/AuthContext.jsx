@@ -33,7 +33,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (credentials) => {
-    await authApi.login(credentials);
+    const { data: loginData } = await authApi.login(credentials);
+    if (loginData.token) {
+      localStorage.setItem("fitsuite_token", loginData.token);
+    }
     const { data } = await authApi.getMe();
     const currentUser = data.data || data.user || data;
     setUser(currentUser);
@@ -51,6 +54,7 @@ export const AuthProvider = ({ children }) => {
       await authApi.logout();
     } finally {
       localStorage.removeItem("fitsuite_user");
+      localStorage.removeItem("fitsuite_token");
       setUser(null);
     }
   };
