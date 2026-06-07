@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import { membersApi, plansApi } from "../api/endpoints.js";
+import { membersApi } from "../api/endpoints.js";
 import DataTable from "../components/common/DataTable.jsx";
 import Modal from "../components/common/Modal.jsx";
 import Pagination from "../components/common/Pagination.jsx";
 import SearchBar from "../components/common/SearchBar.jsx";
 import { useDebounce } from "../hooks/useDebounce.js";
-import { formatCurrency } from "../utils/formatters.js";
+
 
 const emptyForm = {
   name: "",
   phone: "",
   gender: "male",
   address: "",
-  planId: "",
-  paymentAmount: "",
-  paymentMethod: "cash",
-  paymentNote: "",
 };
 
 const Members = () => {
@@ -31,7 +27,6 @@ const Members = () => {
   const [modal, setModal] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [selected, setSelected] = useState(null);
-  const [plans, setPlans] = useState([]);
   const [error, setError] = useState("");
 
   const loadMembers = () => {
@@ -58,12 +53,6 @@ const Members = () => {
     setPage(1);
   }, [location.search]);
 
-  useEffect(() => {
-    plansApi
-      .list({ page: 1, limit: 100 })
-      .then(({ data }) => setPlans(data.data || []));
-  }, []);
-
   const openCreate = () => {
     setSelected(null);
     setForm(emptyForm);
@@ -78,10 +67,6 @@ const Members = () => {
       phone: member.phone || "",
       gender: member.gender || "male",
       address: member.address || "",
-      planId: "",
-      paymentAmount: "",
-      paymentMethod: "cash",
-      paymentNote: "",
     });
     setError("");
     setModal("form");
@@ -147,8 +132,6 @@ const Members = () => {
       ),
     },
   ];
-  const selectedPlan = plans.find((plan) => plan._id === form.planId);
-
   return (
     <div className="page">
       <div className="page-header with-actions">
@@ -185,52 +168,14 @@ const Members = () => {
           </select>
           <input placeholder="Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} />
           {!selected && (
-            <>
-              <div className="form-section-title">Membership</div>
-              <select
-                value={form.planId}
-                onChange={(e) => setForm({ ...form, planId: e.target.value })}
-                required
-              >
-                <option value="">Select plan</option>
-                {plans.map((plan) => (
-                  <option key={plan._id} value={plan._id}>
-                    {plan.name} - {formatCurrency(plan.price)}
-                  </option>
-                ))}
-              </select>
-              {selectedPlan && (
-                <div className="form-hint">
-                  {selectedPlan.durationInDays} days. Pending dues are calculated from the unpaid balance.
-                </div>
-              )}
-              <div className="form-section-title">Initial Payment</div>
-              <input
-                type="number"
-                min="0"
-                max={selectedPlan?.price || undefined}
-                placeholder="Payment amount"
-                value={form.paymentAmount}
-                onChange={(e) => setForm({ ...form, paymentAmount: e.target.value })}
-                required
-              />
-              <select
-                value={form.paymentMethod}
-                onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })}
-              >
-                <option value="cash">Cash</option>
-                <option value="upi">UPI</option>
-              </select>
-              <input
-                placeholder="Payment note"
-                value={form.paymentNote}
-                onChange={(e) => setForm({ ...form, paymentNote: e.target.value })}
-              />
-            </>
+            <div className="form-hint">
+              Password is set to their phone number by default. Assign a plan and
+              record payments from the Memberships & Payments pages.
+            </div>
           )}
           {error && <div className="form-error">{error}</div>}
           <button className="primary-button full" type="submit">
-            {selected ? "Save Member" : "Add Member, Plan & Payment"}
+            {selected ? "Save Member" : "Add Member"}
           </button>
         </form>
       </Modal>
