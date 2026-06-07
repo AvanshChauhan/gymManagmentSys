@@ -24,7 +24,7 @@ app.use(
       ]
         .filter(Boolean)
         .some((o) => origin?.startsWith(o));
-      if (!origin || allowed || origin.endsWith(".netlify.app")) {
+      if (!origin || allowed || origin.endsWith(".netlify.app") || origin.endsWith(".vercel.app")) {
         cb(null, true);
       } else {
         cb(new Error("Not allowed by CORS"));
