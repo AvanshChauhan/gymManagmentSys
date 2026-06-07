@@ -2,9 +2,8 @@ import user from "../models/user.model.js";
 
 const seedAdmin = async () => {
   try {
-    const adminExists = await user.findOne({
-      email: process.env.ADMIN_EMAIL,
-    });
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@fitsuite.com";
+    const adminExists = await user.findOne({ email: adminEmail });
 
     if (adminExists) {
       console.log("Admin already exists");
@@ -12,10 +11,10 @@ const seedAdmin = async () => {
     }
 
     await user.create({
-      name: process.env.ADMIN_NAME,
-      phone: process.env.ADMIN_PHONE,
-      email: process.env.ADMIN_EMAIL,
-      password: process.env.ADMIN_PASSWORD,
+      name: process.env.ADMIN_NAME || "Admin",
+      phone: process.env.ADMIN_PHONE || "0000000000",
+      email: adminEmail,
+      password: process.env.ADMIN_PASSWORD || "admin123",
       role: "admin",
     });
 
