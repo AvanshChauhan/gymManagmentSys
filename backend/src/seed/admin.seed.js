@@ -3,26 +3,29 @@ import user from "../models/user.model.js";
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@fitsuite.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
+const ADMIN_NAME = process.env.ADMIN_NAME || "Admin";
+const ADMIN_PHONE = process.env.ADMIN_PHONE || "0000000000";
 
 const seedAdmin = async () => {
   try {
-    const existing = await user.findOne({ email: ADMIN_EMAIL });
+    let admin = await user.findOne({ role: "admin", isDeleted: false });
 
-    if (existing) {
-      const isMatch = await bcrypt.compare(ADMIN_PASSWORD, existing.password);
+    if (admin) {
+      admin.email = ADMIN_EMAIL;
+      admin.name = ADMIN_NAME;
+      admin.phone = ADMIN_PHONE;
+      const isMatch = await bcrypt.compare(ADMIN_PASSWORD, admin.password);
       if (!isMatch) {
-        existing.password = ADMIN_PASSWORD;
-        await existing.save();
-        console.log("Admin password updated");
-      } else {
-        console.log("Admin already exists");
+        admin.password = ADMIN_PASSWORD;
       }
+      await admin.save();
+      console.log("Admin synced");
       return;
     }
 
     await user.create({
-      name: process.env.ADMIN_NAME || "Admin",
-      phone: process.env.ADMIN_PHONE || "0000000000",
+      name: ADMIN_NAME,
+      phone: ADMIN_PHONE,
       email: ADMIN_EMAIL,
       password: ADMIN_PASSWORD,
       role: "admin",
